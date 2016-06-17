@@ -1,7 +1,9 @@
 package com.example.administrator.bmobfirst;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -49,7 +51,6 @@ public class NoteListActivity extends AppCompatActivity {
                 Intent intent = new Intent(NoteListActivity.this,NoteDetailActivity.class);
                 intent.putExtra("content",content);
                 intent.putExtra("objectid",objectid);
-
                 startActivity(intent);
             }
         });
@@ -65,30 +66,48 @@ public class NoteListActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case DEL_ITEM:
-                //convertView中有objectID
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                View view = info.targetView;
-                String objectid = (String) view.getTag();
-                //这里执行删除的方法
-                Note note = new Note();
-                note.delete(this, objectid, new DeleteListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("删除确认");
+                builder.setMessage("真的要删除么？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess() {
-                        loadData();
-                    }
+                    public void onClick(DialogInterface dialog, int which) {
+                        //convertView中有objectID
+                        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                        View view = info.targetView;
+                        String objectid = (String) view.getTag();
+                        //这里执行删除的方法
+                        Note note = new Note();
+                        note.delete(NoteListActivity.this, objectid, new DeleteListener() {
+                            @Override
+                            public void onSuccess() {
+                                loadData();
+                            }
 
-                    @Override
-                    public void onFailure(int i, String s) {
-
+                            @Override
+                            public void onFailure(int i, String s) {
+                                Toast.makeText(NoteListActivity.this,"删除失败",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //啥也不用干
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+
                 break;
         }
         return super.onContextItemSelected(item);
     }
+
 
     @Override
     protected void onResume() {

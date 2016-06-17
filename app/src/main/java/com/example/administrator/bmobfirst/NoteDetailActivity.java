@@ -20,7 +20,9 @@ public class NoteDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note_detail);
         editText_content = (EditText) findViewById(R.id.editText_detail);
         objectid = getIntent().getStringExtra("objectid");
-        editText_content.setText(getIntent().getStringExtra("content"));
+        String showInfo = getIntent().getStringExtra("content");
+        editText_content.setText(showInfo);
+        editText_content.setSelection(showInfo.length());
 
 
     }

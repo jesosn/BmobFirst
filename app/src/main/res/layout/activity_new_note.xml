@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="top|left"
         android:id="@+id/edittext_context_edit"
+        android:background="@null"
         />
 
 </RelativeLayout>
