@@ -11,16 +11,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="HJJ云记事本"
+        android:icon="@mipmap/icon"
+        android:label="HJJ云记事"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-        </activity>
+
         <activity
             android:name=".LoginActivity"
-            android:label="登陆" >
+            android:label="HJJ云记事" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,16 +26,15 @@
         </activity>
         <activity
             android:name=".Register"
-            android:label="@string/title_activity_register" >
+            android:label="新用户注册" >
         </activity>
-        <activity
-            android:name=".ShowDisplay"
-            android:label="@string/title_activity_show_display" >
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ShowDisplay"-->
+            <!--android:label="@string/title_activity_show_display" >-->
+        <!--</activity>-->
         <activity
             android:name=".NoteListActivity"
             android:label="云记事列表" >
-
         </activity>
         <activity
             android:name=".NoteDetailActivity"
@@ -47,6 +43,10 @@
         <activity
             android:name=".NewNote"
             android:label="新建记事" >
+        </activity>
+        <activity
+            android:name=".ChangePassword"
+            android:label="密码重置" >
         </activity>
     </application>
 

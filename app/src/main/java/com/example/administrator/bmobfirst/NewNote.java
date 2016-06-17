@@ -31,7 +31,6 @@ public class NewNote extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //执行update的操作
-            Toast.makeText(this,user_email,Toast.LENGTH_SHORT).show();
             String content = editText_content.getText().toString();
             if (!TextUtils.isEmpty(content)) {
                 Note note = new Note();

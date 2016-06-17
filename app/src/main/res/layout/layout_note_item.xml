@@ -21,6 +21,7 @@
         android:layout_height="26dp"
         android:id="@+id/textView_content"
         android:hint="请在这里输入内容"
+        android:maxLength="40"
         android:gravity="top|left|center" />
 
 </LinearLayout>

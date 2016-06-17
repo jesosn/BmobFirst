@@ -9,4 +9,5 @@
     <string name="title_activity_note_list">NoteListActivity</string>
     <string name="title_activity_note_detail">NoteDetailActivity</string>
     <string name="title_activity_new_note">NewNote</string>
+    <string name="title_activity_change_password">ChangePassword</string>
 </resources>

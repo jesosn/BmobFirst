@@ -1,5 +1,6 @@
 package com.example.administrator.bmobfirst;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         Bmob.initialize(this, "2c7868d703be32aadae7fcfa39821c5c");
 
     }
+
+    public void showChangePasswdActivity(View view) {
+        Intent intent = new Intent(LoginActivity.this,ChangePassword.class);
+        startActivity(intent);
+    }
+
 
 
     public void registerClick(View view) {
@@ -45,12 +53,16 @@ public class LoginActivity extends AppCompatActivity {
                 User myuser = BmobUser.getCurrentUser(LoginActivity.this,User.class);
 //                toast("登录成功:");
                 if (myuser.getEmailVerified()) {
-                    Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this,NoteListActivity.class);
                     intent.putExtra("user",myuser);
+                    finish();
                     startActivity(intent);
                 }else {
-                    Toast.makeText(LoginActivity.this,"用户未激活",Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setTitle("激活提示");
+                    builder.setMessage("请前去邮箱激活当前用户");
+                    builder.show();
                 }
 
 
