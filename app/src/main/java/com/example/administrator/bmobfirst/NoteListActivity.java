@@ -34,6 +34,7 @@ public class NoteListActivity extends AppCompatActivity {
     private List<Note> notes = new ArrayList<>();
     private ListView listView_note;
     NoteAdapter na;
+    User myuser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,9 @@ public class NoteListActivity extends AppCompatActivity {
         });
 
         registerForContextMenu(listView_note);
+
+        Intent intent = getIntent();
+        myuser = (User) intent.getSerializableExtra("user");
 
     }
 
@@ -120,7 +124,7 @@ public class NoteListActivity extends AppCompatActivity {
         //目的是从后台取出数据
         BmobQuery<Note> query = new BmobQuery<Note>();
 //查询playerName叫“比目”的数据
-//        query.addWhereEqualTo("playerName", "比目");
+        query.addWhereEqualTo("user_email", myuser.getEmail());
 //返回50条数据，如果不加上这条语句，默认返回10条数据
         query.setLimit(50);
 //执行查询方法
@@ -202,6 +206,7 @@ public class NoteListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_note:
                 Intent intent = new Intent(NoteListActivity.this,NewNote.class);
+                intent.putExtra("user",myuser);
                 startActivity(intent);
                 break;
         }

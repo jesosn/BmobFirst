@@ -1,5 +1,6 @@
 package com.example.administrator.bmobfirst;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,27 +8,35 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class NewNote extends AppCompatActivity {
     private EditText editText_content;
+    String user_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         editText_content = (EditText) findViewById(R.id.edittext_context_edit);
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra("user");
+        user_email = user.getEmail();
+
     }
     //按返回应该自动保存
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //执行update的操作
-
+            Toast.makeText(this,user_email,Toast.LENGTH_SHORT).show();
             String content = editText_content.getText().toString();
             if (!TextUtils.isEmpty(content)) {
                 Note note = new Note();
+                note.setUser_email(user_email);
+//                Toast.makeText(NewNote.this,userId,Toast.LENGTH_SHORT).show();
                 note.setContent(content);
                 note.save(this, new SaveListener() {
                     @Override
