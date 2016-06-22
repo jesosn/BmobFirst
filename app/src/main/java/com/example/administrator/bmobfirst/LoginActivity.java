@@ -1,14 +1,19 @@
 package com.example.administrator.bmobfirst;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -16,16 +21,45 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class LoginActivity extends AppCompatActivity {
-
+    SharedPreferences sp;
     EditText editText_username,editText_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sp = getSharedPreferences("msg", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("pass", Context.MODE_PRIVATE);
         editText_username = (EditText) findViewById(R.id.editText_username);
         editText_password = (EditText) findViewById(R.id.editText_password);
         Bmob.initialize(this, "2c7868d703be32aadae7fcfa39821c5c");
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String username = sp.getString("msg", "");
+        editText_username.setText(username);
+        editText_username.setSelection(username.length());
+        String password = sp.getString("pass", "");
+        editText_password.setText(password);
+        editText_password.setSelection(password.length());
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove("msg");
+        editor.remove("pass");
+        editor.commit();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        String msg = editText_username.getText().toString();
+        String pass = editText_password.getText().toString();
+        if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(pass)) {
+            return;
+        }
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("msg",msg);
+        editor.putString("pass",pass);
+        editor.commit();//提交
     }
 
     public void showChangePasswdActivity(View view) {

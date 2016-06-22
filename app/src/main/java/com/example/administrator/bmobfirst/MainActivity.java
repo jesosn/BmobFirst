@@ -1,5 +1,7 @@
 package com.example.administrator.bmobfirst;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -12,12 +14,10 @@ import cn.bmob.v3.listener.UpdateListener;
 
 
 public class MainActivity extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 //        第一：默认初始化
         Bmob.initialize(this, "2c7868d703be32aadae7fcfa39821c5c");
 
@@ -53,6 +53,8 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+
 
     public void updateClick(View view) {
         Person p2 = new Person();
